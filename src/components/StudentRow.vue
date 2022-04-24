@@ -4,8 +4,9 @@
     <td>{{ student.name }}</td>
     <td>{{ student.starID }}</td>
     <td>
-      <input type="checkbox" v-bind:checked="student.present" v-on:change="arrivedOrLeft(student, $event.target.checked)">
+      <input type="checkbox" v-on:change="arrivedOrLeft(student, $event.target.checked)">
     </td>
+    <td> <img v-show="edit" v-on:click="deleteStudent" src="@/assets/delete.png" alt=""></td>
   </tr>
 
 </template>
@@ -14,11 +15,17 @@
 export default {
   name: "StudentRow.vue",
   props: {
-    student: Object
+    student: Object,
+    edit: Boolean
   },
   methods: {
     arrivedOrLeft(student, present) {
       this.$emit('arrived-or-left', student, present)
+    },
+    deleteStudent() {
+      if (confirm(`Delete $(this.student.name?`)) {
+        this.$emit('delete-student', this.student)
+      }
     }
   }
 }
@@ -33,6 +40,10 @@ export default {
 .absent {
   color: brown;
   font-weight: bold;
+}
+
+img {
+  height: 20px;
 }
 
 </style>

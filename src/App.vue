@@ -3,7 +3,8 @@
 
     <new-student-form v-on:student-added="newStudentAdded"></new-student-form>
     <student-message v-bind:student="mostRecentStudent"></student-message>
-    <student-table v-bind:students="students" v-on:student-arrived-or-left="studentArrivedOrLeft"></student-table>
+    <student-table v-bind:students="students" v-on:student-arrived-or-left="studentArrivedOrLeft"
+    v-on:delete-student="studentDeleted"></student-table>
 
   </div>
 </template>
@@ -46,6 +47,14 @@ export default {
         updateStudent.present = present
         this.mostRecentStudent = updateStudent
       }
+    },
+    studentDeleted(student) {
+      this.students = this.students.filter( function(s) {
+        if (s !== student) {
+          return true
+        }
+      })
+      this.mostRecentStudent = {}
     }
   }
 }
