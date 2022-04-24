@@ -11,13 +11,11 @@
           </tr>
 
 
-          <tr v-for="student in students" v-bind:key="student.starID" v-bind:class=" { present: student.present, absent: !student.present } ">
-            <td>{{ student.name }}</td>
-            <td>{{ student.starID }}</td>
-            <td>
-              <input type="checkbox" v-bind:checked="student.present" v-on:change="arrivedOrLeft(student, $event.target.checked)">
-            </td>
-          </tr>
+          <student-row v-for="student in students"
+                       v-bind:student="student"
+                       v-bind:key="student.starID"
+                       v-on:student-arrived-or-left="arrivedOrLeft">
+          </student-row>
 
         </table>
       </div>
@@ -28,8 +26,11 @@
 
 <script>
 
+import StudentRow from '@/components/StudentRow.vue'
+
 export default {
   name: "StudentTable.vue",
+  components: {StudentRow},
   emits: ['student-arrived-or-left'],
   props: {
     students: Array
@@ -43,14 +44,5 @@ export default {
 </script>
 
 <style scoped>
-
-.present {
-  color: chartreuse;
-}
-
-.absent {
-  color: brown;
-  font-weight: bold;
-}
 
 </style>
